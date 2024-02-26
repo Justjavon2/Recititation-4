@@ -1,6 +1,12 @@
 import java.util.Random;
 
 public class RPS_Player {
+
+    private final Random vergil=new Random();
+    private final static int ROCK = 0;
+    private final static int SCISSORS  = 1;
+
+    private final static int PAPER  = 2;
     private int numberOfGamesWon;
     private int numberOfGamesPlayed;
     private int choice;
@@ -8,10 +14,14 @@ public class RPS_Player {
 
     public RPS_Player(String name){
         // TODO: replace this line with your code.
+        numberOfGamesWon = 0;
+        numberOfGamesPlayed = 0;
+        this.name = name;
+
     }
 
     public String getName(){
-        // TODO: replace this line with your code.
+        return name;
     }
 
     /**
@@ -20,6 +30,7 @@ public class RPS_Player {
      */
     public int getNumberOfGamesPlayed(){
         // TODO: replace this line with your code.
+        return numberOfGamesPlayed;
     }
 
     /**
@@ -27,7 +38,7 @@ public class RPS_Player {
      * @return returns the number of games won.
      */
     public int getNumberOfGamesWon(){
-        // TODO: replace this line with your code.
+         return numberOfGamesWon;
     }
 
     /**
@@ -35,25 +46,47 @@ public class RPS_Player {
      * @return win percentage as a double.
      */
     public double getWinPercentage(){
-        // TODO: replace this line with your code.
+        return (double)numberOfGamesWon/numberOfGamesPlayed;
     }
 
     /**
      * Starts a new game.
      */
     public void clear(){
-        // TODO: replace this line with your code.
+        this.numberOfGamesPlayed=0;
+        this.numberOfGamesWon=0;
     }
 
     /**
      * This player challenges anotherPlayer whereby both players make a
-     * random choice of rock, paper, scissors.  A reference to the winning
+     * random choice of rock, paper, scissors.
+     * A reference to the winning
      * player is returned or null if there is a draw.
      * @param anotherPlayer an RPS_Player that this player is challenging.
      * @return Reference to the RPS_Player that won or a null if there is a draw
      */
     public RPS_Player challenge(RPS_Player anotherPlayer){
-        // TODO: replace this line with your code.
+        choice=vergil.nextInt(3);
+        anotherPlayer.choice = vergil.nextInt(3);
+        if (choice != anotherPlayer.choice){
+            if(choice == ROCK && anotherPlayer.choice== SCISSORS ||
+                    choice == PAPER && anotherPlayer.choice== ROCK ||
+                    choice == SCISSORS && anotherPlayer.choice== PAPER){
+                numberOfGamesWon+=1;
+                numberOfGamesPlayed+=1;
+                anotherPlayer.numberOfGamesPlayed+=1;
+                return this;
+            }
+            else{
+                anotherPlayer.numberOfGamesPlayed+=1;
+                anotherPlayer.numberOfGamesWon+=1;
+                numberOfGamesPlayed+=1;
+                return anotherPlayer;
+            }
+        }
+        numberOfGamesPlayed+=1;
+        anotherPlayer.numberOfGamesPlayed+=1;
+        return null;
     }
 
     /**
@@ -64,7 +97,26 @@ public class RPS_Player {
      * @return Reference to the RPS_Player that won or a null if there is a draw
      */
     public RPS_Player keepAndChallenge(RPS_Player anotherPlayer){
-        // TODO: replace this line with your code.
+        anotherPlayer.choice = vergil.nextInt(3);
+        if (choice != anotherPlayer.choice){
+            if(choice == ROCK && anotherPlayer.choice== SCISSORS ||
+                    choice == PAPER && anotherPlayer.choice== ROCK ||
+                    choice == SCISSORS && anotherPlayer.choice== PAPER){
+                numberOfGamesWon+=1;
+                numberOfGamesPlayed+=1;
+                anotherPlayer.numberOfGamesPlayed+=1;
+                return this;
+            }
+            else{
+                anotherPlayer.numberOfGamesPlayed+=1;
+                anotherPlayer.numberOfGamesWon+=1;
+                numberOfGamesPlayed+=1;
+                return anotherPlayer;
+            }
+        }
+        numberOfGamesPlayed+=1;
+        anotherPlayer.numberOfGamesPlayed+=1;
+        return null;
     }
 
 }
